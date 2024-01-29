@@ -40,6 +40,11 @@
 		EBF6DDD52B67507300A7F204 = {
 			isa = PBXGroup;
 			children = (
+				EBF6DDF92B68669F00A7F204 /* Resources */,
+				EBF6DDF82B68669800A7F204 /* ViewModels */,
+				EBF6DDF72B68669100A7F204 /* Models */,
+				EBF6DDF62B68668C00A7F204 /* Views */,
+				EBF6DDF52B68667D00A7F204 /* Controllers */,
 				EBF6DDE02B67507300A7F204 /* IMChat */,
 				EBF6DDDF2B67507300A7F204 /* Products */,
 			);
@@ -56,15 +61,58 @@
 		EBF6DDE02B67507300A7F204 /* IMChat */ = {
 			isa = PBXGroup;
 			children = (
-				EBF6DDE12B67507300A7F204 /* AppDelegate.swift */,
-				EBF6DDE32B67507300A7F204 /* SceneDelegate.swift */,
-				EBF6DDE52B67507300A7F204 /* ViewController.swift */,
-				EBF6DDE72B67507300A7F204 /* Main.storyboard */,
-				EBF6DDEA2B67507500A7F204 /* Assets.xcassets */,
-				EBF6DDEC2B67507500A7F204 /* LaunchScreen.storyboard */,
 				EBF6DDEF2B67507500A7F204 /* Info.plist */,
 			);
 			path = IMChat;
+			sourceTree = "<group>";
+		};
+		EBF6DDF52B68667D00A7F204 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				EBF6DDE52B67507300A7F204 /* ViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		EBF6DDF62B68668C00A7F204 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				EBF6DDFA2B68671000A7F204 /* Storyboards */,
+				EBF6DDEA2B67507500A7F204 /* Assets.xcassets */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		EBF6DDF72B68669100A7F204 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		EBF6DDF82B68669800A7F204 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		EBF6DDF92B68669F00A7F204 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				EBF6DDE12B67507300A7F204 /* AppDelegate.swift */,
+				EBF6DDE32B67507300A7F204 /* SceneDelegate.swift */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		EBF6DDFA2B68671000A7F204 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				EBF6DDE72B67507300A7F204 /* Main.storyboard */,
+				EBF6DDEC2B67507500A7F204 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
