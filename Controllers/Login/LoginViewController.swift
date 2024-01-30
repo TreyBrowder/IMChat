@@ -20,7 +20,7 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         title = "Log In"
 
-        view.backgroundColor = .white
+        view.backgroundColor = .lightGray
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Register",
                                                             style: .done,
@@ -33,9 +33,9 @@ class LoginViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        let size = view.frame.size.width/3
-        imageView.frame = CGRect(x: (view.frame.size.width)/2,
-                                 y: 20,
+        let size = view.width/3
+        imageView.frame = CGRect(x: (view.width)/3,
+                                 y: 100,
                                  width: size,
                                  height: size)
     }
