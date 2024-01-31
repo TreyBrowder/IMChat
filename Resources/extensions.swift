@@ -2,6 +2,9 @@
 //  extensions.swift
 //  IMChat
 //
+//  purpose:
+//      - add comuputed properties to avoid redundancy
+//
 //  Created by Trey Browder on 1/29/24.
 //
 
