@@ -81,6 +81,13 @@ class LoginViewController: UIViewController {
                                                             target: self,
                                                             action: #selector(didTapRegister))
         
+        loginButton.addTarget(self,
+                              action: #selector(loginButtonTapped),
+                              for: .touchUpInside)
+        
+        emailField.delegate = self
+        passwordField.delegate = self
+        
         //Add subviews here:
         //scroll view first -
         view.addSubview(scrollView)
@@ -118,10 +125,47 @@ class LoginViewController: UIViewController {
                                    height: 52)
     }
     
+    @objc private func loginButtonTapped(){
+        guard let email = emailField.text, let password = passwordField.text,
+              !email.isEmpty, !password.isEmpty else {
+            alertUserEmptyLoginErrorMsg()
+            return
+        }
+        
+        //Add Firebase Log in functionality here
+    }
+    
+    func alertUserEmptyLoginErrorMsg(){
+        let alertMsg = UIAlertController(title: "Invalid Login info",
+                                         message: "Please enter your correct account info",
+                                         preferredStyle: .alert)
+        
+        alertMsg.addAction(UIAlertAction(title: "Dissmiss",
+                                           style: .cancel,
+                                           handler: nil))
+        
+        present(alertMsg, animated: true)
+    }
+    
     @objc private func didTapRegister() {
         let vc = RegisterViewController()
         vc.title = "Create Account"
         navigationController?.pushViewController(vc, animated: true)
     }
 
+}
+
+extension LoginViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        if textField == emailField {
+            passwordField.becomeFirstResponder()
+        }
+        else if textField == passwordField {
+            loginButtonTapped()
+        }
+        
+        return true
+    }
 }
