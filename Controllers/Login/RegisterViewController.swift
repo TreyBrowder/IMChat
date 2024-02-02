@@ -17,7 +17,7 @@ class RegisterViewController: UIViewController {
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "head")
+        imageView.image = UIImage(systemName: "person.circle")
         imageView.tintColor = .gray
         imageView.contentMode = .scaleAspectFit
         return imageView
@@ -114,13 +114,10 @@ class RegisterViewController: UIViewController {
 
         //enable the user interation with the image and the scroll view
         //in order to tap the picture to change it
+        //create a gesture variable then add that to the imageView
         imageView.isUserInteractionEnabled = true
         scrollView.isUserInteractionEnabled = true
-        
         let gesture = UITapGestureRecognizer(target: self, action: #selector(didTapChangeProfilePic))
-        
-        gesture.numberOfTapsRequired = 1
-        gesture.numberOfTouchesRequired = 1
         imageView.addGestureRecognizer(gesture)
         
     }
