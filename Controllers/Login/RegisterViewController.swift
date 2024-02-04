@@ -20,6 +20,10 @@ class RegisterViewController: UIViewController {
         imageView.image = UIImage(systemName: "person.circle")
         imageView.tintColor = .gray
         imageView.contentMode = .scaleAspectFit
+        imageView.layer.masksToBounds = true
+        imageView.layer.borderWidth = 2
+        imageView.layer.borderColor = UIColor.lightGray.cgColor
+        
         return imageView
     }()
     
@@ -135,6 +139,9 @@ class RegisterViewController: UIViewController {
                                  y: 20,
                                  width: size,
                                  height: size)
+        //set corner radis for the imageview after user selects/takes a pic for profile
+        imageView.layer.cornerRadius = imageView.width/2.0
+        
         nameField.frame = CGRect(x: 30,
                                   y: imageView.bottom+10,
                                   width: scrollView.width - 60,
@@ -199,7 +206,7 @@ extension RegisterViewController: UITextFieldDelegate {
     }
 }
 
-extension RegisterViewController: UIImagePickerControllerDelegate {
+extension RegisterViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     //2 options:
     //take pic or select pic
@@ -214,24 +221,48 @@ extension RegisterViewController: UIImagePickerControllerDelegate {
         
         actionSheet.addAction(UIAlertAction(title: "Take Photo",
                                             style: .default,
-                                            handler: { _ in     // _ in - the action itself
+                                            handler: { [weak self] _ in     // _ in - the action itself
+            self?.presentCamera()
         }))
         
         actionSheet.addAction(UIAlertAction(title: "Select Photo",
                                             style: .default,
-                                            handler: { _ in
+                                            handler: { [weak self] _ in     //weak self - avoid
+            self?.presentPhotoPicker()
         }))
         
         present(actionSheet, animated: true)
     }
     
+    func presentCamera() {
+        let vc = UIImagePickerController()
+        vc.sourceType = .camera
+        vc.delegate = self
+        vc.allowsEditing = true
+        
+        present(vc, animated: true)
+    }
+    
+    func presentPhotoPicker() {
+        let vc = UIImagePickerController()
+        vc.sourceType = .photoLibrary
+        vc.delegate = self
+        vc.allowsEditing = true
+        
+        present(vc, animated: true)
+    }
+    
     //gets called when user takes a photo or selects a photo
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
+        picker.dismiss(animated: true, completion: nil)
+        guard let selectedImg = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else {
+            return
+        }
+        self.imageView.image = selectedImg
     }
     
     //gets called when a user cancels the photo selection or when user cancels taking a photo
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        
+        picker.dismiss(animated: true, completion: nil)
     }
 }
