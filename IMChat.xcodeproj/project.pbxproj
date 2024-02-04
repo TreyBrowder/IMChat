@@ -379,6 +379,8 @@
 				DEVELOPMENT_TEAM = NT57WH95JN;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = IMChat/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Please allow access to the Camera";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Please allow access to select a photo for your profile";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -407,6 +409,8 @@
 				DEVELOPMENT_TEAM = NT57WH95JN;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = IMChat/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Please allow access to the Camera";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Please allow access to select a photo for your profile";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

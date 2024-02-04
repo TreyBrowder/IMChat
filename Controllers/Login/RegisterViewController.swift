@@ -123,7 +123,7 @@ class RegisterViewController: UIViewController {
     }
     
     @objc private func didTapChangeProfilePic(){
-        print("changed profile pic test")
+        presentPhotoActionSheet()
     }
     
     override func viewDidLayoutSubviews() {
@@ -196,5 +196,42 @@ extension RegisterViewController: UITextFieldDelegate {
         }
         
         return true
+    }
+}
+
+extension RegisterViewController: UIImagePickerControllerDelegate {
+    
+    //2 options:
+    //take pic or select pic
+    func presentPhotoActionSheet(){
+        let actionSheet = UIAlertController(title: "Profile Picture",
+                                            message: "How would you like to select a picture?",
+                                            preferredStyle: .actionSheet)
+        
+        actionSheet.addAction(UIAlertAction(title: "Cancel",
+                                            style: .cancel,
+                                            handler: nil))
+        
+        actionSheet.addAction(UIAlertAction(title: "Take Photo",
+                                            style: .default,
+                                            handler: { _ in     // _ in - the action itself
+        }))
+        
+        actionSheet.addAction(UIAlertAction(title: "Select Photo",
+                                            style: .default,
+                                            handler: { _ in
+        }))
+        
+        present(actionSheet, animated: true)
+    }
+    
+    //gets called when user takes a photo or selects a photo
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+    }
+    
+    //gets called when a user cancels the photo selection or when user cancels taking a photo
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        
     }
 }
