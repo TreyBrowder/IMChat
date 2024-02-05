@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		518D9ACE75FF6C3E19F2F457 /* Pods_IMChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D4515F8023D97C34C364CAE /* Pods_IMChat.framework */; };
 		EB8F3D6E2B7132290082DA9E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EB8F3D6D2B7132290082DA9E /* GoogleService-Info.plist */; };
+		EB8F3D702B7189DB0082DA9E /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8F3D6F2B7189DB0082DA9E /* DatabaseManager.swift */; };
 		EBF6DDE22B67507300A7F204 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF6DDE12B67507300A7F204 /* AppDelegate.swift */; };
 		EBF6DDE42B67507300A7F204 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF6DDE32B67507300A7F204 /* SceneDelegate.swift */; };
 		EBF6DDE62B67507300A7F204 /* ConversationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF6DDE52B67507300A7F204 /* ConversationsViewController.swift */; };
@@ -29,6 +30,7 @@
 		5BC2F3D33A0362C7DFA97880 /* Pods-IMChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IMChat.debug.xcconfig"; path = "Target Support Files/Pods-IMChat/Pods-IMChat.debug.xcconfig"; sourceTree = "<group>"; };
 		772212AA26E59B5D7CDE65C9 /* Pods-IMChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IMChat.release.xcconfig"; path = "Target Support Files/Pods-IMChat/Pods-IMChat.release.xcconfig"; sourceTree = "<group>"; };
 		EB8F3D6D2B7132290082DA9E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		EB8F3D6F2B7189DB0082DA9E /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		EBF6DDDE2B67507300A7F204 /* IMChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IMChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBF6DDE12B67507300A7F204 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EBF6DDE32B67507300A7F204 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 				EBF6DDE12B67507300A7F204 /* AppDelegate.swift */,
 				EBF6DDE32B67507300A7F204 /* SceneDelegate.swift */,
 				EBF6DE082B6879BF00A7F204 /* extensions.swift */,
+				EB8F3D6F2B7189DB0082DA9E /* DatabaseManager.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -288,6 +291,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EBF6DDFC2B6868BA00A7F204 /* LoginViewController.swift in Sources */,
+				EB8F3D702B7189DB0082DA9E /* DatabaseManager.swift in Sources */,
 				EBF6DDFE2B6868CA00A7F204 /* RegisterViewController.swift in Sources */,
 				EBF6DE042B68691000A7F204 /* NewConversationViewController.swift in Sources */,
 				EBF6DDE62B67507300A7F204 /* ConversationsViewController.swift in Sources */,

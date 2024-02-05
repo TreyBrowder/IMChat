@@ -176,21 +176,36 @@ class RegisterViewController: UIViewController {
             return
         }
         
-        //Add Firebase Log in functionality here
-        FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password, completion: {authResult, error in
-            guard let result = authResult, error == nil else {
-                print("Error creating user")
+        //Add Firebase Log in functionality below
+        DatabaseManager.shared.userExist(with: email, completion: { [weak self] exists in
+            guard let strongSelf = self else {
                 return
             }
             
-            let user = result.user
-            print("Successfully created user: \(user)!")
+            guard !exists else {
+                //user already extis
+                strongSelf.alertUserEmptyLoginErrorMsg(message: "Looks like that email already exist")
+                return
+            }
+            
+            FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password, completion: { authResult, error in
+                guard authResult != nil, error == nil else {
+                    print("Error creating user")
+                    return
+                }
+                
+                DatabaseManager.shared.insertUser(with: IMChatUser(firstLastName: name,
+                                                                    emailAddress: email))
+                
+                strongSelf.navigationController?.dismiss(animated: true, completion: nil)
+            })
+            
         })
     }
     
-    func alertUserEmptyLoginErrorMsg(){
+    func alertUserEmptyLoginErrorMsg(message: String = "Please fill in all info to create an account"){
         let alertMsg = UIAlertController(title: "Invalid Registration info",
-                                         message: "Please fill in all info to create an account",
+                                         message: message,
                                          preferredStyle: .alert)
         
         alertMsg.addAction(UIAlertAction(title: "Dissmiss",
