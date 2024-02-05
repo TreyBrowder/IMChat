@@ -1,0 +1,532 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		518D9ACE75FF6C3E19F2F457 /* Pods_IMChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D4515F8023D97C34C364CAE /* Pods_IMChat.framework */; };
+		EB8F3D6E2B7132290082DA9E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EB8F3D6D2B7132290082DA9E /* GoogleService-Info.plist */; };
+		EBF6DDE22B67507300A7F204 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF6DDE12B67507300A7F204 /* AppDelegate.swift */; };
+		EBF6DDE42B67507300A7F204 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF6DDE32B67507300A7F204 /* SceneDelegate.swift */; };
+		EBF6DDE62B67507300A7F204 /* ConversationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF6DDE52B67507300A7F204 /* ConversationsViewController.swift */; };
+		EBF6DDE92B67507300A7F204 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EBF6DDE72B67507300A7F204 /* Main.storyboard */; };
+		EBF6DDEB2B67507500A7F204 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBF6DDEA2B67507500A7F204 /* Assets.xcassets */; };
+		EBF6DDEE2B67507500A7F204 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EBF6DDEC2B67507500A7F204 /* LaunchScreen.storyboard */; };
+		EBF6DDFC2B6868BA00A7F204 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF6DDFB2B6868BA00A7F204 /* LoginViewController.swift */; };
+		EBF6DDFE2B6868CA00A7F204 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF6DDFD2B6868CA00A7F204 /* RegisterViewController.swift */; };
+		EBF6DE002B6868DF00A7F204 /* PhotoViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF6DDFF2B6868DF00A7F204 /* PhotoViewerViewController.swift */; };
+		EBF6DE022B6868EF00A7F204 /* VIdeoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF6DE012B6868EF00A7F204 /* VIdeoPlayerViewController.swift */; };
+		EBF6DE042B68691000A7F204 /* NewConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF6DE032B68691000A7F204 /* NewConversationViewController.swift */; };
+		EBF6DE062B68691800A7F204 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF6DE052B68691800A7F204 /* ProfileViewController.swift */; };
+		EBF6DE092B6879BF00A7F204 /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF6DE082B6879BF00A7F204 /* extensions.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		2D4515F8023D97C34C364CAE /* Pods_IMChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IMChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5BC2F3D33A0362C7DFA97880 /* Pods-IMChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IMChat.debug.xcconfig"; path = "Target Support Files/Pods-IMChat/Pods-IMChat.debug.xcconfig"; sourceTree = "<group>"; };
+		772212AA26E59B5D7CDE65C9 /* Pods-IMChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IMChat.release.xcconfig"; path = "Target Support Files/Pods-IMChat/Pods-IMChat.release.xcconfig"; sourceTree = "<group>"; };
+		EB8F3D6D2B7132290082DA9E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		EBF6DDDE2B67507300A7F204 /* IMChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IMChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EBF6DDE12B67507300A7F204 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		EBF6DDE32B67507300A7F204 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		EBF6DDE52B67507300A7F204 /* ConversationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsViewController.swift; sourceTree = "<group>"; };
+		EBF6DDE82B67507300A7F204 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		EBF6DDEA2B67507500A7F204 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		EBF6DDED2B67507500A7F204 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		EBF6DDEF2B67507500A7F204 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EBF6DDFB2B6868BA00A7F204 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		EBF6DDFD2B6868CA00A7F204 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		EBF6DDFF2B6868DF00A7F204 /* PhotoViewerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewerViewController.swift; sourceTree = "<group>"; };
+		EBF6DE012B6868EF00A7F204 /* VIdeoPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VIdeoPlayerViewController.swift; sourceTree = "<group>"; };
+		EBF6DE032B68691000A7F204 /* NewConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationViewController.swift; sourceTree = "<group>"; };
+		EBF6DE052B68691800A7F204 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		EBF6DE082B6879BF00A7F204 /* extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EBF6DDDB2B67507300A7F204 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				518D9ACE75FF6C3E19F2F457 /* Pods_IMChat.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		70F427DC32BF1D5FACE2AE76 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5BC2F3D33A0362C7DFA97880 /* Pods-IMChat.debug.xcconfig */,
+				772212AA26E59B5D7CDE65C9 /* Pods-IMChat.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		A63B0156BD736D1F445816D3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2D4515F8023D97C34C364CAE /* Pods_IMChat.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EBF6DDD52B67507300A7F204 = {
+			isa = PBXGroup;
+			children = (
+				EBF6DDF92B68669F00A7F204 /* Resources */,
+				EBF6DDF82B68669800A7F204 /* ViewModels */,
+				EBF6DDF72B68669100A7F204 /* Models */,
+				EBF6DDF62B68668C00A7F204 /* Views */,
+				EBF6DDF52B68667D00A7F204 /* Controllers */,
+				EBF6DDE02B67507300A7F204 /* IMChat */,
+				EBF6DDDF2B67507300A7F204 /* Products */,
+				70F427DC32BF1D5FACE2AE76 /* Pods */,
+				A63B0156BD736D1F445816D3 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		EBF6DDDF2B67507300A7F204 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EBF6DDDE2B67507300A7F204 /* IMChat.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EBF6DDE02B67507300A7F204 /* IMChat */ = {
+			isa = PBXGroup;
+			children = (
+				EB8F3D6D2B7132290082DA9E /* GoogleService-Info.plist */,
+				EBF6DDEF2B67507500A7F204 /* Info.plist */,
+			);
+			path = IMChat;
+			sourceTree = "<group>";
+		};
+		EBF6DDF52B68667D00A7F204 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				EBF6DDE52B67507300A7F204 /* ConversationsViewController.swift */,
+				EBF6DE072B686A6600A7F204 /* Login */,
+				EBF6DDFF2B6868DF00A7F204 /* PhotoViewerViewController.swift */,
+				EBF6DE012B6868EF00A7F204 /* VIdeoPlayerViewController.swift */,
+				EBF6DE032B68691000A7F204 /* NewConversationViewController.swift */,
+				EBF6DE052B68691800A7F204 /* ProfileViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		EBF6DDF62B68668C00A7F204 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				EBF6DDFA2B68671000A7F204 /* Storyboards */,
+				EBF6DDEA2B67507500A7F204 /* Assets.xcassets */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		EBF6DDF72B68669100A7F204 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		EBF6DDF82B68669800A7F204 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		EBF6DDF92B68669F00A7F204 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				EBF6DDE12B67507300A7F204 /* AppDelegate.swift */,
+				EBF6DDE32B67507300A7F204 /* SceneDelegate.swift */,
+				EBF6DE082B6879BF00A7F204 /* extensions.swift */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		EBF6DDFA2B68671000A7F204 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				EBF6DDE72B67507300A7F204 /* Main.storyboard */,
+				EBF6DDEC2B67507500A7F204 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		EBF6DE072B686A6600A7F204 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				EBF6DDFD2B6868CA00A7F204 /* RegisterViewController.swift */,
+				EBF6DDFB2B6868BA00A7F204 /* LoginViewController.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		EBF6DDDD2B67507300A7F204 /* IMChat */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EBF6DDF22B67507500A7F204 /* Build configuration list for PBXNativeTarget "IMChat" */;
+			buildPhases = (
+				4668EADC53C00D91DC39A0C3 /* [CP] Check Pods Manifest.lock */,
+				EBF6DDDA2B67507300A7F204 /* Sources */,
+				EBF6DDDB2B67507300A7F204 /* Frameworks */,
+				EBF6DDDC2B67507300A7F204 /* Resources */,
+				25EFDB2C6BCC677F48C7DB6F /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = IMChat;
+			productName = IMChat;
+			productReference = EBF6DDDE2B67507300A7F204 /* IMChat.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EBF6DDD62B67507300A7F204 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1520;
+				LastUpgradeCheck = 1520;
+				TargetAttributes = {
+					EBF6DDDD2B67507300A7F204 = {
+						CreatedOnToolsVersion = 15.2;
+					};
+				};
+			};
+			buildConfigurationList = EBF6DDD92B67507300A7F204 /* Build configuration list for PBXProject "IMChat" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = EBF6DDD52B67507300A7F204;
+			productRefGroup = EBF6DDDF2B67507300A7F204 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EBF6DDDD2B67507300A7F204 /* IMChat */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EBF6DDDC2B67507300A7F204 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EBF6DDEE2B67507500A7F204 /* LaunchScreen.storyboard in Resources */,
+				EB8F3D6E2B7132290082DA9E /* GoogleService-Info.plist in Resources */,
+				EBF6DDEB2B67507500A7F204 /* Assets.xcassets in Resources */,
+				EBF6DDE92B67507300A7F204 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		25EFDB2C6BCC677F48C7DB6F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-IMChat/Pods-IMChat-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-IMChat/Pods-IMChat-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-IMChat/Pods-IMChat-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4668EADC53C00D91DC39A0C3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-IMChat-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EBF6DDDA2B67507300A7F204 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EBF6DDFC2B6868BA00A7F204 /* LoginViewController.swift in Sources */,
+				EBF6DDFE2B6868CA00A7F204 /* RegisterViewController.swift in Sources */,
+				EBF6DE042B68691000A7F204 /* NewConversationViewController.swift in Sources */,
+				EBF6DDE62B67507300A7F204 /* ConversationsViewController.swift in Sources */,
+				EBF6DDE22B67507300A7F204 /* AppDelegate.swift in Sources */,
+				EBF6DE092B6879BF00A7F204 /* extensions.swift in Sources */,
+				EBF6DDE42B67507300A7F204 /* SceneDelegate.swift in Sources */,
+				EBF6DE062B68691800A7F204 /* ProfileViewController.swift in Sources */,
+				EBF6DE002B6868DF00A7F204 /* PhotoViewerViewController.swift in Sources */,
+				EBF6DE022B6868EF00A7F204 /* VIdeoPlayerViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		EBF6DDE72B67507300A7F204 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EBF6DDE82B67507300A7F204 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		EBF6DDEC2B67507500A7F204 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EBF6DDED2B67507500A7F204 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		EBF6DDF02B67507500A7F204 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		EBF6DDF12B67507500A7F204 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		EBF6DDF32B67507500A7F204 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5BC2F3D33A0362C7DFA97880 /* Pods-IMChat.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NT57WH95JN;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = IMChat/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Please allow access to the Camera";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Please allow access to select a photo for your profile";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.treybrowder.IMChat;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EBF6DDF42B67507500A7F204 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 772212AA26E59B5D7CDE65C9 /* Pods-IMChat.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NT57WH95JN;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = IMChat/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Please allow access to the Camera";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Please allow access to select a photo for your profile";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.treybrowder.IMChat;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EBF6DDD92B67507300A7F204 /* Build configuration list for PBXProject "IMChat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EBF6DDF02B67507500A7F204 /* Debug */,
+				EBF6DDF12B67507500A7F204 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EBF6DDF22B67507500A7F204 /* Build configuration list for PBXNativeTarget "IMChat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EBF6DDF32B67507500A7F204 /* Debug */,
+				EBF6DDF42B67507500A7F204 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EBF6DDD62B67507300A7F204 /* Project object */;
+}
