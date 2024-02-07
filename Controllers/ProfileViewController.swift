@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseAuth
+import FBSDKLoginKit
 
 class ProfileViewController: UIViewController {
 
@@ -46,25 +47,28 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                                             style: .destructive,
                                             handler: { [weak self] _ in
             
-                        guard let strongSelf = self else {
-                            return
-                        }
-                        
-                        do {
-                            try FirebaseAuth.Auth.auth().signOut()
-                            
-                            let vc = LoginViewController()
-                            let nav = UINavigationController(rootViewController: vc)
-                            //want to set nav.modalPresentationStyle to fullscreen - if not specified this way controller pops
-                            //up as a card and the user can dismiss it even if they arent logged in
-                            nav.modalPresentationStyle = .fullScreen
-                            strongSelf.present(nav, animated: true)
-                            
-                        }
-                        catch {
-                            print("error signing out..try again")
-                        }
-    
+            guard let strongSelf = self else {
+                return
+            }
+            
+            //Log out facebook
+            FBSDKLoginKit.LoginManager().logOut()
+            
+            do {
+                try FirebaseAuth.Auth.auth().signOut()
+                
+                let vc = LoginViewController()
+                let nav = UINavigationController(rootViewController: vc)
+                //want to set nav.modalPresentationStyle to fullscreen - if not specified this way controller pops
+                //up as a card and the user can dismiss it even if they arent logged in
+                nav.modalPresentationStyle = .fullScreen
+                strongSelf.present(nav, animated: true)
+                
+            }
+            catch {
+                print("error signing out..try again")
+            }
+            
         }))
         
         actionSheet.addAction(UIAlertAction(title: "Cancel",
