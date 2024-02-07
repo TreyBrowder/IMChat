@@ -6,9 +6,13 @@ target 'IMChat' do
   use_frameworks!
 
   # Pods for IMChat
-
+# Firebase
 pod 'Firebase/Core'
 pod 'Firebase/Auth'
 pod 'Firebase/Database'
 
+# Facebook Dependencys
+pod 'FBSDKLoginKit'
+pod 'FBSDKCoreKit'
+pod 'FBSDKShareKit'
 end

@@ -16,6 +16,7 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -37,14 +38,40 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    func tableView(_tableView: UITableView, didSelectRowAt indextPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indextPath: IndexPath) {
         tableView.deselectRow(at: indextPath, animated: true)
         
-        do {
-            try FirebaseAuth.Auth.auth().signOut()
-        }
-        catch {
-            print("error signing out..try again")
-        }
+        let actionSheet = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: "Log Out",
+                                            style: .destructive,
+                                            handler: { [weak self] _ in
+            
+                        guard let strongSelf = self else {
+                            return
+                        }
+                        
+                        do {
+                            try FirebaseAuth.Auth.auth().signOut()
+                            
+                            let vc = LoginViewController()
+                            let nav = UINavigationController(rootViewController: vc)
+                            //want to set nav.modalPresentationStyle to fullscreen - if not specified this way controller pops
+                            //up as a card and the user can dismiss it even if they arent logged in
+                            nav.modalPresentationStyle = .fullScreen
+                            strongSelf.present(nav, animated: true)
+                            
+                        }
+                        catch {
+                            print("error signing out..try again")
+                        }
+    
+        }))
+        
+        actionSheet.addAction(UIAlertAction(title: "Cancel",
+                                            style: .cancel,
+                                            handler: nil))
+        
+        present(actionSheet, animated: true)
+        
     }
 }

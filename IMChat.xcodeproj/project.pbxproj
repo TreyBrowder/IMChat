@@ -192,6 +192,8 @@
 			dependencies = (
 			);
 			name = IMChat;
+			packageProductDependencies = (
+			);
 			productName = IMChat;
 			productReference = EBF6DDDE2B67507300A7F204 /* IMChat.app */;
 			productType = "com.apple.product-type.application";
@@ -220,6 +222,8 @@
 				Base,
 			);
 			mainGroup = EBF6DDD52B67507300A7F204;
+			packageReferences = (
+			);
 			productRefGroup = EBF6DDDF2B67507300A7F204 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -378,6 +382,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -435,6 +440,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;

@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseAuth
+import FBSDKLoginKit
 
 class LoginViewController: UIViewController {
     
@@ -70,6 +71,9 @@ class LoginViewController: UIViewController {
         button.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
         return button
     }()
+    
+    //Facebook login button
+    private let FBloginButton = FBLoginButton()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,7 +101,7 @@ class LoginViewController: UIViewController {
         scrollView.addSubview(emailField)
         scrollView.addSubview(passwordField)
         scrollView.addSubview(loginButton)
-        
+        scrollView.addSubview(FBloginButton)
     }
     
     override func viewDidLayoutSubviews() {
@@ -124,6 +128,12 @@ class LoginViewController: UIViewController {
                                    y: passwordField.bottom+10,
                                    width: scrollView.width - 60,
                                    height: 52)
+        
+        FBloginButton.center = scrollView.center
+        FBloginButton.frame = CGRect(x: 30,
+                                    y: passwordField.bottom+10,
+                                    width: scrollView.width - 60,
+                                    height: 52)
     }
     
     @objc private func loginButtonTapped(){
