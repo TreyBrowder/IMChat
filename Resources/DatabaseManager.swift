@@ -28,29 +28,22 @@ extension DatabaseManager {
                 completion(false)
                 return
             }
-            
             completion(true)
         })
     }
     
     ///Insert new user into database
-    public func insertUser(with user: IMChatUser){
+    public func insertUser(with user: IMChatUser, completion: @escaping (Bool) -> Void){
         database.child(user.safeEmail).setValue([
             "full_name": user.firstLastName
-        ])
+        ], withCompletionBlock: { error, _ in
+            guard error == nil else {
+                print("failed to write to Database")
+                completion(false)
+                return
+            }
+            completion(true)
+        })
     }
 }
 
-struct IMChatUser {
-    let firstLastName: String
-    let emailAddress: String
-//  birthDate: ?
-//  let profilePictureUrl: String
-    
-    var safeEmail: String {
-        var safeEmail = emailAddress.replacingOccurrences(of: ".", with: "-")
-        safeEmail = safeEmail.replacingOccurrences(of: "@", with: "-")
-        return safeEmail
-    }
-    
-}

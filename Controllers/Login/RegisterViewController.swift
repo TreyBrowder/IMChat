@@ -187,6 +187,7 @@ class RegisterViewController: UIViewController {
                 return
             }
             
+            //dismiss spinner
             DispatchQueue.main.async {
                 strongSelf.spinner.dismiss()
             }
@@ -203,8 +204,27 @@ class RegisterViewController: UIViewController {
                     return
                 }
                 
-                DatabaseManager.shared.insertUser(with: IMChatUser(firstLastName: name,
-                                                                    emailAddress: email))
+                //instert to the Database
+                let iMChatUser = IMChatUser(firstLastName: name,
+                                            emailAddress: email)
+                DatabaseManager.shared.insertUser(with: iMChatUser, completion: { success in
+                    if success {
+                        //upload imagae
+                        guard let image = strongSelf.imageView.image, let data = image.pngData() else {
+                            return
+                        }
+                        let fileName = iMChatUser.profilePicturFileName
+                        StorageManager.sharedStorageObj.uploadProfilePic(with: data, fileName: fileName, completion: { result in
+                            switch result {
+                            case .success(let downloadUrl):
+                                UserDefaults.standard.set(downloadUrl, forKey: "profile_picture_url")
+                                print(downloadUrl)
+                            case .failure(let error):
+                                print("Storage manager error: \(error)")
+                            }
+                        })
+                    }
+                })
                 
                 strongSelf.navigationController?.dismiss(animated: true, completion: nil)
             })

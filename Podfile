@@ -10,6 +10,7 @@ target 'IMChat' do
 pod 'Firebase/Core'
 pod 'Firebase/Auth'
 pod 'Firebase/Database'
+pod 'Firebase/Storage'
 
 # Facebook Dependencys
 pod 'FBSDKLoginKit'

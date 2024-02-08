@@ -236,7 +236,7 @@ extension LoginViewController: LoginButtonDelegate {
         
         //add current logged in users email/name to firebase - to do this make a Graph request
         let FBRequest = FBSDKLoginKit.GraphRequest(graphPath: "me",
-                                                   parameters: ["fields": "email, name"], //email wont work since this isnt an actual business
+                                                   parameters: ["fields": "email, name, picture.type(large)"], //email wont work since this isnt an actual business
                                                    tokenString: token,
                                                    version: nil,
                                                    httpMethod: .get)
@@ -246,9 +246,17 @@ extension LoginViewController: LoginButtonDelegate {
                 print("failed to make Facebook graph request")
                 return
             }
+            
+            //facebook profile pic result - testing purposes
+            print(result)
+            
             //print result to check if name and email come back - email doesn't come back since i dont have email permissions
             //print("\(result)")
-            guard let userName = result["name"] as? String else {
+            guard let userName = result["name"] as? String,
+                  //let email = result["email"] as? String,
+                  let picture = result["picture"] as? [String: Any],
+            let data = picture["data"] as? [String: Any],
+            let picURL = data["url"] as? String else {
                 print("failed to get name from FB result ")
                 return
             }
@@ -256,10 +264,41 @@ extension LoginViewController: LoginButtonDelegate {
             //adduser
             DatabaseManager.shared.userExist(with: userName) { exists in
                 if !exists {
-                    
-                    //since i dont own an actual business i created a dummy email to be inserted into database
+                    //email permission dont work without verfied business
                     let newIMChatUser: IMChatUser = IMChatUser(firstLastName: userName, emailAddress: "FaceBookTestUsers@test.com")
-                    DatabaseManager.shared.insertUser(with: newIMChatUser)
+                    DatabaseManager.shared.insertUser(with: newIMChatUser, completion: { success in
+                        if success {
+                            guard let url = URL(string: picURL) else {
+                                print("failed to set facebook pic url as url string")
+                                return
+                            }
+                            
+                            print("downloading data from facebook images......")
+                            
+                            URLSession.shared.dataTask(with: url, completionHandler: { data, _, _ in
+                                guard let data = data else {
+                                    print("error in URL session data task")
+                                    return
+                                }
+                                
+                                print("SUCCESS -  data from facebook images downloaded - now uploading to firebase...")
+                                
+                                //upload picture
+                                let fileName = newIMChatUser.profilePicturFileName
+                                StorageManager.sharedStorageObj.uploadProfilePic(with: data, fileName: fileName, completion: { result in
+                                    switch result {
+                                    case .success(let downloadUrl):
+                                        UserDefaults.standard.set(downloadUrl, forKey: "profile_picture_url")
+                                        print(downloadUrl)
+                                    case .failure(let error):
+                                        print("Storage manager error: \(error)")
+                                    }
+                                })
+                            }).resume()
+                            
+
+                        }
+                    })
                 }
             }
             
