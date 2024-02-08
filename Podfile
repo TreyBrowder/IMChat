@@ -15,4 +15,10 @@ pod 'Firebase/Database'
 pod 'FBSDKLoginKit'
 pod 'FBSDKCoreKit'
 pod 'FBSDKShareKit'
+
+pod 'MessageKit'
+pod 'JGProgressHUD','2.1'
+pod 'RealmSwift'
+pod 'SDWebImage'
+
 end

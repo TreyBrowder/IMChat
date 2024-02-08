@@ -8,8 +8,11 @@
 import UIKit
 import FirebaseAuth
 import FBSDKLoginKit
+import JGProgressHUD
 
 class LoginViewController: UIViewController {
+    
+    private let spinner = JGProgressHUD(style: .dark)
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -140,7 +143,7 @@ class LoginViewController: UIViewController {
         
         faceBookloginButton.center = scrollView.center
         faceBookloginButton.frame = CGRect(x: 30,
-                                    y: passwordField.bottom+10,
+                                    y: loginButton.bottom+10,
                                     width: scrollView.width - 60,
                                     height: 52)
         
@@ -157,10 +160,18 @@ class LoginViewController: UIViewController {
             return
         }
         
+        spinner.show(in: view)
+        
         //Add Firebase Log in functionality here
         FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password, completion: { [weak self] authResults, error in
+            
             guard let strongSelf = self else {
                 return
+            }
+            
+            //get rid of spinner once done with firebase auth statements - updating UI needs to be done on main thread
+            DispatchQueue.main.async {
+                strongSelf.spinner.dismiss()
             }
             
             guard let result = authResults, error == nil else {
