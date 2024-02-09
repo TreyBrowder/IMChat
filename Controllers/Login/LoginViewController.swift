@@ -80,7 +80,7 @@ class LoginViewController: UIViewController {
         let button = FBLoginButton()
         
         //can not add email to permissions since this app isnt going to be a legit business
-        button.permissions = ["public_profile"]
+        button.permissions = ["public_profile", "email"]
         
         return button
     }()
@@ -182,6 +182,9 @@ class LoginViewController: UIViewController {
             let user = result.user
             print("logged in user: \(user)")
             
+            //cache users log in email
+            UserDefaults.standard.set(email, forKey: "email")
+            
             strongSelf.navigationController?.dismiss(animated: true, completion: nil)
         })
     }
@@ -250,6 +253,7 @@ extension LoginViewController: LoginButtonDelegate {
             //facebook profile pic result - testing purposes
             print(result)
             
+            
             //print result to check if name and email come back - email doesn't come back since i dont have email permissions
             //print("\(result)")
             guard let userName = result["name"] as? String,
@@ -257,15 +261,20 @@ extension LoginViewController: LoginButtonDelegate {
                   let picture = result["picture"] as? [String: Any],
             let data = picture["data"] as? [String: Any],
             let picURL = data["url"] as? String else {
-                print("failed to get name from FB result ")
+                print("failed to get all data from FB result graph request")
                 return
             }
+            
+            //cache users email - since email doesnt work:
+            //generate random number 1-50 to attach to test email string
+            var email = "test\(Int.random(in: 1..<50))@test.com"
+            UserDefaults.standard.set(email, forKey: "email")
             
             //adduser
             DatabaseManager.shared.userExist(with: userName) { exists in
                 if !exists {
                     //email permission dont work without verfied business
-                    let newIMChatUser: IMChatUser = IMChatUser(firstLastName: userName, emailAddress: "FaceBookTestUsers@test.com")
+                    let newIMChatUser: IMChatUser = IMChatUser(firstLastName: userName, emailAddress: email)
                     DatabaseManager.shared.insertUser(with: newIMChatUser, completion: { success in
                         if success {
                             guard let url = URL(string: picURL) else {
