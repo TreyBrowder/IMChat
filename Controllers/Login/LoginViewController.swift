@@ -182,9 +182,28 @@ class LoginViewController: UIViewController {
             let user = result.user
             print("logged in user: \(user)")
             
+            
+            //cache users name
+            let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
+            DatabaseManager.shared.getDataFor(path: safeEmail, completion: { result in
+                switch result {
+                case .success(let data):
+                    guard let userData = data as? [String: Any],
+                          let name = userData["full_name"] as? String else {
+                        print("failed to read full name(FB account) from DB entry")
+                        return
+                    }
+                    UserDefaults.standard.set("\(name)", forKey: "name")
+                    
+                case .failure(let err):
+                    print("failed to read data with error: \(err)")
+                }
+            })
+            
             //cache users log in email
             UserDefaults.standard.set(email, forKey: "email")
             
+            print("logged in user: \(user)")
             strongSelf.navigationController?.dismiss(animated: true, completion: nil)
         })
     }
@@ -259,16 +278,18 @@ extension LoginViewController: LoginButtonDelegate {
             guard let userName = result["name"] as? String,
                   //let email = result["email"] as? String,
                   let picture = result["picture"] as? [String: Any],
-            let data = picture["data"] as? [String: Any],
-            let picURL = data["url"] as? String else {
+                  let data = picture["data"] as? [String: Any],
+                  let picURL = data["url"] as? String else {
                 print("failed to get all data from FB result graph request")
                 return
             }
             
             //cache users email - since email doesnt work:
             //generate random number 1-50 to attach to test email string
+            //then also need to cache user name
             var email = "test\(Int.random(in: 1..<50))@test.com"
             UserDefaults.standard.set(email, forKey: "email")
+            UserDefaults.standard.set("\(userName)", forKey: "name")
             
             //adduser
             DatabaseManager.shared.userExist(with: userName) { exists in
