@@ -23,7 +23,7 @@ class ProfileViewController: UIViewController {
         tableView.tableHeaderView = createTableHeader()
     }
     
-    
+    //profile page header with profile pic 
     func createTableHeader() -> UIView? {
         guard let email = UserDefaults.standard.value(forKey: "email") as? String else {
             return nil
