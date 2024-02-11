@@ -116,6 +116,7 @@ class ChatViewController: MessagesViewController {
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
+        messagesCollectionView.messageCellDelegate = self
         messageInputBar.delegate = self
         setUpInputButton()
         
@@ -349,7 +350,7 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
     }
 }
 
-//message delegate
+//message collection view delegate
 extension ChatViewController: MessagesDataSource, MessagesLayoutDelegate, MessagesDisplayDelegate {
     func currentSender() -> MessageKit.SenderType {
         if let sender = selfSender {
@@ -382,5 +383,28 @@ extension ChatViewController: MessagesDataSource, MessagesLayoutDelegate, Messag
         }
         
     }
-    
 }
+
+extension ChatViewController: MessageCellDelegate {
+    func didTapImage(in cell: MessageCollectionViewCell) {
+        guard let indexPath = messagesCollectionView.indexPath(for: cell) else {
+            return
+        }
+        print("\(indexPath)")
+        
+        let message = messages[indexPath.section]
+        
+        switch message.kind {
+        case .photo(let media):
+            guard let imageUrl = media.url else {
+                return
+            }
+            
+            let vc = PhotoViewerViewController(with: imageUrl)
+            self.navigationController?.pushViewController(vc, animated: true)
+        default:
+            break
+        }
+    }
+}
+
