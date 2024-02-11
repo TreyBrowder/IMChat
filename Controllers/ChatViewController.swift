@@ -8,6 +8,7 @@
 import UIKit
 import MessageKit
 import InputBarAccessoryView
+import SDWebImage
 
 struct Message: MessageType {
     
@@ -51,6 +52,17 @@ struct Sender: SenderType {
    public var photoURL: String
    public var senderId: String
    public var displayName: String
+    
+}
+
+struct Media: MediaItem {
+    var url: URL?
+    
+    var image: UIImage?
+    
+    var placeholderImage: UIImage
+    
+    var size: CGSize
     
 }
 
@@ -105,7 +117,73 @@ class ChatViewController: MessagesViewController {
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
         messageInputBar.delegate = self
+        setUpInputButton()
         
+    }
+    
+    private func setUpInputButton(){
+        let button = InputBarButtonItem()
+        //set size at 36 becasue i want a 1 pt buffer from the view in the message input bar set below
+        button.setSize(CGSize(width: 35, height: 35), animated: false)
+        button.setImage(UIImage(systemName: "plus"), for: .normal)
+        button.onTouchUpInside { [weak self]_ in
+            self?.presentInputActionSheet()
+        }
+                       
+        messageInputBar.setLeftStackViewWidthConstant(to: 36, animated: false)
+        messageInputBar.setStackViewItems([button], forStack: .left, animated: false)
+    }
+    
+    private func presentInputActionSheet() {
+        
+        let actionSheet = UIAlertController(title: "Add media",
+                                            message: "what do you want to add",
+                                            preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: "Photo", style: .default, handler: { [weak self] _ in
+            //photo picker action
+            self?.presentPhotoInputActionSheet()
+        }))
+        
+        actionSheet.addAction(UIAlertAction(title: "Video", style: .default, handler: {  _ in
+            //video
+        }))
+        
+        actionSheet.addAction(UIAlertAction(title: "Audio", style: .default, handler: { _ in
+            //audio
+        }))
+        
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(actionSheet, animated: true)
+    }
+    
+    private func presentPhotoInputActionSheet(){
+        let actionSheet = UIAlertController(title: "Add Photo",
+                                            message: "From Camera or Photo Library",
+                                            preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: { [weak self] _ in
+            //photo picker from camera
+            let picker = UIImagePickerController()
+            picker.sourceType = .camera
+            picker.delegate = self
+            picker.allowsEditing = true
+            
+            self?.present(picker, animated: true)
+        }))
+        
+        actionSheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: {  [weak self] _ in
+            //photo picker from photo library
+            let picker = UIImagePickerController()
+            picker.sourceType = .photoLibrary
+            picker.delegate = self
+            picker.allowsEditing = true
+            
+            self?.present(picker, animated: true)
+        }))
+        
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(actionSheet, animated: true)
     }
     
     private func listenFormessages(id: String, shouldScrollToBottom: Bool) {
@@ -138,6 +216,68 @@ class ChatViewController: MessagesViewController {
         if let conversationId = conversationId {
             listenFormessages(id: conversationId, shouldScrollToBottom: true)
         }
+    }
+}
+
+// MARK: - Send photo library/camera
+extension ChatViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+        guard let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage,
+              let imageData = image.pngData(),
+        let messageId = createMessageId(),
+        let conversationId = conversationId,
+        let selfSender = selfSender,
+        let name = self.title else {
+            return
+        }
+        
+        let fileName = "photo_message_\(messageId).png"
+        let resultFileName = fileName.replacingOccurrences(of: " ", with: "-")
+        
+        //upload image
+        
+        StorageManager.sharedStorageObj.uploadMessageData(with: imageData, fileName: resultFileName, completion: { [weak self] result in
+            guard let strongSelf = self else {
+                return
+            }
+            switch result {
+            case .success(let urlString):
+                print("Ready to send message")
+                //upload the photo to the database
+                
+                guard let url = URL(string: urlString),
+                      let placeholder = UIImage(systemName: "plus") else {
+                    return
+                }
+                
+                let media = Media(url: url, image: nil, placeholderImage: placeholder, size: .zero)
+                
+                let message = Message(sender: selfSender,
+                                       messageId: messageId,
+                                       sentDate: Date(),
+                                       kind: .photo(media))
+                
+                DatabaseManager.shared.sendMessage(to: conversationId, otherUserEmail: strongSelf.otherUserEmail, otherUsersName: name, newMessage: message, completion: { success in
+                    
+                    if success{
+                        print("sent photo message")
+                    }else {
+                        print("failed to send photo message")
+                    }
+                    
+                })
+                
+                
+            case .failure(let error):
+                print("failed to upload photo for messaging with erre: \(error)")
+            }
+        })
     }
 }
 
@@ -179,7 +319,7 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
                 return
             }
             //append conversation in existing conversation in DB
-            DatabaseManager.shared.sendMessage(to: conversationId, otherUsersName: name, newMessage: messages, completion: { success in
+            DatabaseManager.shared.sendMessage(to: conversationId, otherUserEmail: otherUserEmail, otherUsersName: name, newMessage: messages, completion: { success in
                 if success {
                     print("message sent")
                 }
@@ -209,6 +349,7 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
     }
 }
 
+//message delegate
 extension ChatViewController: MessagesDataSource, MessagesLayoutDelegate, MessagesDisplayDelegate {
     func currentSender() -> MessageKit.SenderType {
         if let sender = selfSender {
@@ -223,6 +364,23 @@ extension ChatViewController: MessagesDataSource, MessagesLayoutDelegate, Messag
     
     func numberOfSections(in messagesCollectionView: MessageKit.MessagesCollectionView) -> Int {
         return messages.count
+    }
+    
+    func configureMediaMessageImageView(_ imageView: UIImageView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
+        guard let message = message as? Message else {
+            return
+        }
+        
+        switch message.kind {
+        case .photo(let media):
+            guard let imageUrl = media.url else {
+                return
+            }
+            imageView.sd_setImage(with: imageUrl, completed: nil)
+        default:
+            break
+        }
+        
     }
     
 }
