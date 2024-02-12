@@ -49,6 +49,9 @@ class ConversationsViewController: UIViewController {
         return label
     }()
     
+    //notifications for the conversation listener after login
+    private var loginObserver: NSObjectProtocol?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose,
@@ -59,12 +62,24 @@ class ConversationsViewController: UIViewController {
         setUpTableView()
         fetchConversations()
         startListeningForConversations()
+        
+        loginObserver = NotificationCenter.default.addObserver(forName: .didLogInNotification, object: nil, queue: .main, using: { [weak self] _ in
+            guard let strongSelf = self else {
+                return
+            }
+            
+            strongSelf.startListeningForConversations()
+        })
     }
     
     private func startListeningForConversations(){
         
         guard let email = UserDefaults.standard.value(forKey: "email") as? String else {
             return
+        }
+        
+        if let observer = loginObserver {
+            NotificationCenter.default.removeObserver(observer)
         }
         
         print("Conversations loading.....")
@@ -117,6 +132,7 @@ class ConversationsViewController: UIViewController {
     }
     
     private func setUpTableView() {
+        print("i am being called")
         tableView.delegate = self
         tableView.dataSource = self
     }
