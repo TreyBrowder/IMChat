@@ -132,7 +132,7 @@ class ConversationsViewController: UIViewController {
     }
     
     private func setUpTableView() {
-        print("i am being called")
+        
         tableView.delegate = self
         tableView.dataSource = self
     }
