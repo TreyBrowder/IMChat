@@ -152,14 +152,14 @@ class ConversationsViewController: UIViewController {
     }
     
     ///pushes controller with new conversation state
-    private func createNewConversation(result: [String: String]){
-        //unwrap the result to get name and email
-        guard let name = result["name"], let email = result["email"] else {
-            //log func name for any possible error handling
-            print("Function name: createNewConversation(result: [String: String])")
-            print("failed to get name and email from the result")
-            return
-        }
+    private func createNewConversation(result: SearchResult){
+        print("LOG: createNewConversation function")
+        
+        let name = result.name
+        let email = result.email
+        
+        print("name:  \(name)")
+        print("email:  \(email)")
         let vc = ChatViewController(with: email, id: nil)
         vc.isNewConversation = true
         vc.title = name

@@ -12,9 +12,9 @@ class NewConversationViewController: UIViewController {
     
     private var usersArr = [[String: String]]()
     private var hasFetched = false
-    private var results = [[String: String]]()
+    private var results = [SearchResult]()
     
-    public var completion: (([String: String]) -> (Void))?
+    public var completion: ((SearchResult) -> (Void))?
     
     
     private let spinner = JGProgressHUD(style: .dark)
@@ -83,7 +83,7 @@ extension NewConversationViewController: UITableViewDelegate, UITableViewDataSou
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = results[indexPath.row]["name"]
+        cell.textLabel?.text = results[indexPath.row].name
         
         return cell
     }
@@ -150,7 +150,7 @@ extension NewConversationViewController: UISearchBarDelegate {
         self.spinner.dismiss()
         
         //dont want to allow user to start conversation with themselves
-        let resultsArr: [[String: String]] = self.usersArr.filter({
+        let resultsArr: [SearchResult] = self.usersArr.filter({
             guard let email = $0["email"], email != safeEmail else {
                 return false
             }
@@ -160,6 +160,16 @@ extension NewConversationViewController: UISearchBarDelegate {
             }
             
             return name.hasPrefix(term.lowercased())
+        }).compactMap ({
+            
+            guard let email = $0["email"],
+            let name = $0["name"] else {
+                //failed
+                print("failed to return name with email with SearchResult Obj")
+                return nil
+            }
+            
+            return SearchResult(name: name, email: email)
         })
         
         self.results = resultsArr
@@ -180,3 +190,7 @@ extension NewConversationViewController: UISearchBarDelegate {
     }
 }
 
+struct SearchResult {
+    let name: String
+    let email: String
+}
