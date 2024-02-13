@@ -140,13 +140,21 @@ extension NewConversationViewController: UISearchBarDelegate {
     ///filter out thst has the prefix of search term
     func filterUsers(with term: String) {
         //update UI - show result of search or show no results label
-        guard hasFetched else {
+        guard let currentUserEmail = UserDefaults.standard.value(forKey: "email") as? String, hasFetched else {
             return
         }
         
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: currentUserEmail)
+        
+        //dismiss search spinner
         self.spinner.dismiss()
         
+        //dont want to allow user to start conversation with themselves
         let resultsArr: [[String: String]] = self.usersArr.filter({
+            guard let email = $0["email"], email != safeEmail else {
+                return false
+            }
+            
             guard let name = $0["name"]?.lowercased() else {
                 return false
             }
