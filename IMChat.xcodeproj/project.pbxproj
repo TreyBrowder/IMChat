@@ -14,6 +14,7 @@
 		EB692D6F2B7561C800BF3456 /* IMChatUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB692D6E2B7561C800BF3456 /* IMChatUser.swift */; };
 		EB692D712B76B56B00BF3456 /* ConversationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB692D702B76B56B00BF3456 /* ConversationTableViewCell.swift */; };
 		EB692D752B7AECC300BF3456 /* NewConversationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB692D742B7AECC300BF3456 /* NewConversationCell.swift */; };
+		EB692D772B7CDCDB00BF3456 /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB692D762B7CDCDB00BF3456 /* CacheManager.swift */; };
 		EB8F3D702B7189DB0082DA9E /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8F3D6F2B7189DB0082DA9E /* DatabaseManager.swift */; };
 		EBF6DDE22B67507300A7F204 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF6DDE12B67507300A7F204 /* AppDelegate.swift */; };
 		EBF6DDE42B67507300A7F204 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF6DDE32B67507300A7F204 /* SceneDelegate.swift */; };
@@ -39,6 +40,7 @@
 		EB692D6E2B7561C800BF3456 /* IMChatUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMChatUser.swift; sourceTree = "<group>"; };
 		EB692D702B76B56B00BF3456 /* ConversationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTableViewCell.swift; sourceTree = "<group>"; };
 		EB692D742B7AECC300BF3456 /* NewConversationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationCell.swift; sourceTree = "<group>"; };
+		EB692D762B7CDCDB00BF3456 /* CacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
 		EB8F3D6F2B7189DB0082DA9E /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		EBF6DDDE2B67507300A7F204 /* IMChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IMChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBF6DDE12B67507300A7F204 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 				EBF6DE082B6879BF00A7F204 /* extensions.swift */,
 				EB8F3D6F2B7189DB0082DA9E /* DatabaseManager.swift */,
 				EB692D6C2B755AF400BF3456 /* StorageManager.swift */,
+				EB692D762B7CDCDB00BF3456 /* CacheManager.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -310,6 +313,7 @@
 				EBF6DE062B68691800A7F204 /* ProfileViewController.swift in Sources */,
 				EBF6DE002B6868DF00A7F204 /* PhotoViewerViewController.swift in Sources */,
 				EB692D6B2B75444100BF3456 /* ChatViewController.swift in Sources */,
+				EB692D772B7CDCDB00BF3456 /* CacheManager.swift in Sources */,
 				EB692D6F2B7561C800BF3456 /* IMChatUser.swift in Sources */,
 				EB692D6D2B755AF400BF3456 /* StorageManager.swift in Sources */,
 				EB692D712B76B56B00BF3456 /* ConversationTableViewCell.swift in Sources */,

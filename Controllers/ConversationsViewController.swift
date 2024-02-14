@@ -63,13 +63,6 @@ class ConversationsViewController: UIViewController {
         fetchConversations()
         startListeningForConversations()
         
-        loginObserver = NotificationCenter.default.addObserver(forName: .didLogInNotification, object: nil, queue: .main, using: { [weak self] _ in
-            guard let strongSelf = self else {
-                return
-            }
-            
-            strongSelf.startListeningForConversations()
-        })
     }
     
     private func startListeningForConversations(){
@@ -118,6 +111,15 @@ class ConversationsViewController: UIViewController {
         super.viewDidAppear(animated)
         
         validateAuth()
+        
+        loginObserver = NotificationCenter.default.addObserver(forName: .didLogInNotification, object: nil, queue: .main, using: { [weak self] _ in
+            guard let strongSelf = self else {
+                print("login Observer failed to load conversations on new account login")
+                return
+            }
+            
+            strongSelf.startListeningForConversations()
+        })
     }
     
     private func validateAuth() {
