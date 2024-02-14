@@ -594,4 +594,50 @@ extension DatabaseManager {
             }
         })
     }
+    
+    public func deleteConversation(conversationId: String, completion: @escaping (Bool) -> Void) {
+        guard let email = UserDefaults.standard.value(forKey: "email") as? String else {
+            print("LOG: deleteConversatin method ----")
+            print("faild to get email from current user")
+            return
+        }
+        
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
+        
+        print("Deleting conversation with id: \(conversationId)")
+        
+        //get all conversations for current user
+        //delete conversation with targetted id
+        //reset those conversations for the user in data
+        let ref = database.child("\(safeEmail)/conversations")
+        ref.observeSingleEvent(of: .value) { snapShot in
+            if var conversations = snapShot.value as? [[String: Any]] {
+                var positionToRemove = 0
+                for conversation in conversations {
+                    if let id = conversation["id"] as? String,
+                       id == conversationId {
+                        print("Found position to delete that match conversation id")
+                        print("Getting ready to delete it")
+                        break
+                    }
+                    positionToRemove += 1
+                }
+                
+                print("Deleting conversation...")
+                conversations.remove(at: positionToRemove)
+                //update ref to new value (positionToRemove
+                ref.setValue(conversations) { error, _ in
+                    guard error == nil else {
+                        print("LOG: deleteConversatin method ----")
+                        print("faillure at udating reference value to new conversation array")
+                        completion(false)
+                        return
+                    }
+                    print("SUCCESS -- Deleted Conversation")
+                    completion(true)
+                }
+            }
+        }
+        
+    }
 }
