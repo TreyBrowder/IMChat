@@ -200,5 +200,34 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
         return 120
     }
     
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        
+        return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        //handle delete function from editingStyleForRowAt
+        //delete row
+        //updating backing model - if not app would crash:
+        //due to mismatch between model array that drives the table view
+        //because it have one aditional entry and rows will be one less
+        
+        if editingStyle == .delete {
+            //begin delete
+            
+            let converionId = conversations[indexPath.row].id
+            tableView.beginUpdates()
+            
+            DatabaseManager.shared.deleteConversation(conversationId: converionId) { [weak self] success in
+                if success {
+                    self?.conversations.remove(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: .left)
+                }
+            }
+            
+            tableView.endUpdates()
+        }
+    }
+    
 }
 
