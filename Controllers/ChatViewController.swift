@@ -371,7 +371,7 @@ extension ChatViewController: UIImagePickerControllerDelegate, UINavigationContr
 
 extension ChatViewController: InputBarAccessoryViewDelegate {
     
-    ///send button clicked
+    ///send button clicked to send a message
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
         //no empty messages
         guard !text.replacingOccurrences(of: " ", with: "").isEmpty,
@@ -381,7 +381,7 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
         }
         
         //test to print texts to the console
-        print("sending \(text)")
+        print("sending \(text) from \(selfSender)")
         
         let messages = Message(sender: selfSender,
                                messageId: messageId,
@@ -395,6 +395,7 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
                 if success {
                     print("message sent")
                     self?.isNewConversation = false
+                    inputBar.inputTextView.text = ""
                 }
                 else {
                     print("failed to send message")
@@ -414,7 +415,6 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
                 }
                 else {
                     print("failed to send message")
-                    inputBar.inputTextView.text = ""
                 }
             })
         }
