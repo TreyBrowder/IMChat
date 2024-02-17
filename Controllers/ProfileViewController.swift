@@ -9,14 +9,74 @@ import UIKit
 import FirebaseAuth
 import FBSDKLoginKit
 
+enum ProfileCellModelType {
+    case info, logout
+}
+
+struct ProfileCellModel {
+    let cellModelType: ProfileCellModelType
+    let title: String
+    let handler: (()-> Void)?
+}
+
 class ProfileViewController: UIViewController {
 
     @IBOutlet var tableView: UITableView!
     
-    let data = ["Log Out"]
+    //need multiple cells
+    var data = [ProfileCellModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.register(ProfileTableViewCell.self, forCellReuseIdentifier: ProfileTableViewCell.identifier)
+        data.append(ProfileCellModel(cellModelType: .info,
+                                     title: "Name: \(UserDefaults.standard.value(forKey: "name") as? String ?? "No Name")",
+                                     handler: nil))
+        data.append(ProfileCellModel(cellModelType: .info,
+                                     title: "Email: \(UserDefaults.standard.value(forKey: "email") as? String ?? "No Email")",
+                                     handler: nil))
+        data.append(ProfileCellModel(cellModelType: .logout, title: "Log Out", handler: {[ weak self] in
+            
+            guard let strongSelf = self else {
+                return
+            }
+            
+            let actionSheet = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
+            actionSheet.addAction(UIAlertAction(title: "Log Out", style: .destructive,
+                                                handler: { [weak self] _ in
+                
+                guard let strongSelf = self else {
+                    return
+                }
+                
+                //Log out facebook
+                FBSDKLoginKit.LoginManager().logOut()
+                
+                do {
+                    try FirebaseAuth.Auth.auth().signOut()
+                    
+                    let vc = LoginViewController()
+                    let nav = UINavigationController(rootViewController: vc)
+                    //want to set nav.modalPresentationStyle to fullscreen - if not specified this way controller pops
+                    //up as a card and the user can dismiss it even if they arent logged in
+                    nav.modalPresentationStyle = .fullScreen
+                    strongSelf.present(nav, animated: true)
+                    
+                }
+                catch {
+                    print("error signing out..try again")
+                }
+                
+            }))
+            
+            actionSheet.addAction(UIAlertAction(title: "Cancel",
+                                                style: .cancel,
+                                                handler: nil))
+            
+            strongSelf.present(actionSheet, animated: true)
+            
+        }))
+        
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.delegate = self
         tableView.dataSource = self
@@ -32,14 +92,14 @@ class ProfileViewController: UIViewController {
         let fileName = safeEmail + "_profile_picture.png"
         let path = "images/" + fileName
         
-        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.width, height: 300))
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.width, height: 200))
         
         headerView.backgroundColor = .link
         
         
         
         let imageView = UIImageView(frame: CGRect(x: (headerView.width - 150) / 2,
-                                                  y: 75,
+                                                  y: (headerView.height - 150)/2,
                                                   width: 150,
                                                   height: 150))
         
@@ -82,51 +142,39 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = data[indexPath.row]
-        cell.textLabel?.textAlignment = .center
-        cell.textLabel?.textColor = .red
         
+        let cellModel = data[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: ProfileTableViewCell.identifier,
+                                                 for: indexPath) as! ProfileTableViewCell
+        
+        cell.setUp(with: cellModel)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indextPath: IndexPath) {
         tableView.deselectRow(at: indextPath, animated: true)
+      
+        data[indextPath.row].handler?()
+    }
+}
+
+class ProfileTableViewCell: UITableViewCell {
+    
+    static let identifier = "ProfileTableViewCell"
+    
+    public func setUp(with cellModel: ProfileCellModel) {
         
-        let actionSheet = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
-        actionSheet.addAction(UIAlertAction(title: "Log Out",
-                                            style: .destructive,
-                                            handler: { [weak self] _ in
-            
-            guard let strongSelf = self else {
-                return
-            }
-            
-            //Log out facebook
-            FBSDKLoginKit.LoginManager().logOut()
-            
-            do {
-                try FirebaseAuth.Auth.auth().signOut()
-                
-                let vc = LoginViewController()
-                let nav = UINavigationController(rootViewController: vc)
-                //want to set nav.modalPresentationStyle to fullscreen - if not specified this way controller pops
-                //up as a card and the user can dismiss it even if they arent logged in
-                nav.modalPresentationStyle = .fullScreen
-                strongSelf.present(nav, animated: true)
-                
-            }
-            catch {
-                print("error signing out..try again")
-            }
-            
-        }))
+        self.textLabel?.text = cellModel.title
         
-        actionSheet.addAction(UIAlertAction(title: "Cancel",
-                                            style: .cancel,
-                                            handler: nil))
-        
-        present(actionSheet, animated: true)
+        switch cellModel.cellModelType {
+        case .info:
+            //text is already aligned left so i dont really need this
+            self.textLabel?.textAlignment = .left
+            selectionStyle = .none
+        case .logout:
+            self.textLabel?.textColor = .red
+            self.textLabel?.textAlignment = .center
+        }
         
     }
 }
