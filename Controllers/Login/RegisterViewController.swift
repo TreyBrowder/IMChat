@@ -44,7 +44,7 @@ class RegisterViewController: UIViewController {
         //add "padding" to the text in the email text field by creating the left field view
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
-        field.backgroundColor = .white
+        field.backgroundColor = .secondarySystemBackground
         
         return field
     }()
@@ -62,7 +62,7 @@ class RegisterViewController: UIViewController {
         //add "padding" to the text in the email text field by creating the left field view
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
-        field.backgroundColor = .white
+        field.backgroundColor = .secondarySystemBackground
         
         return field
     }()
@@ -82,7 +82,7 @@ class RegisterViewController: UIViewController {
         //add "padding" to the text in the passwprd text field by creating the left field view
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
-        field.backgroundColor = .white
+        field.backgroundColor = .secondarySystemBackground
         
         return field
     }()
@@ -90,7 +90,7 @@ class RegisterViewController: UIViewController {
     private let registerButton: UIButton = {
         let button = UIButton()
         button.setTitle("Register", for: .normal)
-        button.backgroundColor = .black
+        button.backgroundColor = .link
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 12
         button.layer.masksToBounds = true
@@ -102,7 +102,7 @@ class RegisterViewController: UIViewController {
         super.viewDidLoad()
         title = "Create Account"
         
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
        
         registerButton.addTarget(self,
                               action: #selector(registerButtonTapped),
