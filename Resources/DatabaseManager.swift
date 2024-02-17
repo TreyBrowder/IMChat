@@ -635,7 +635,7 @@ extension DatabaseManager {
                                 let newConversationData: [String: Any] = [
                                     "id": conversation,
                                     "other_user_email": DatabaseManager.safeEmail(emailAddress: currentEmail),
-                                    "other_user_name": currentUserName, //was other user Name
+                                    "other_user_name": currentUserName,
                                     "latest_message": updatedValue
                                 ]
                                 databaseEntryConversations = [
