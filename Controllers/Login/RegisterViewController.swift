@@ -204,6 +204,9 @@ class RegisterViewController: UIViewController {
                     return
                 }
                 
+                //cache new registered user
+                CacheManager.cacheObj.cacheUserNameAndEmail(with: name, email: email)
+                
                 //instert to the Database
                 let iMChatUser = IMChatUser(firstLastName: name,
                                             emailAddress: email)

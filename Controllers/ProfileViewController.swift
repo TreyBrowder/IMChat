@@ -49,6 +49,9 @@ class ProfileViewController: UIViewController {
                     return
                 }
                 
+                //clear Cache from previous user
+                CacheManager.cacheObj.removeAll()
+                
                 //Log out facebook
                 FBSDKLoginKit.LoginManager().logOut()
                 

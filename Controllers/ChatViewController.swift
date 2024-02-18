@@ -88,7 +88,7 @@ class ChatViewController: MessagesViewController {
     
     public var isNewConversation = false
     private let otherUserEmail: String
-    public let conversationId: String?
+    public var conversationId: String?
     
     private var messages = [Message]()
     
@@ -386,7 +386,7 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
         //test to print texts to the console
         print("sending \(text) from \(selfSender)")
         
-        let messages = Message(sender: selfSender,
+        let message = Message(sender: selfSender,
                                messageId: messageId,
                                sentDate: Date(),
                                kind: .text(text))
@@ -394,11 +394,14 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
         //send message integration
         if isNewConversation {
             //create convo in DB
-            DatabaseManager.shared.createNewConversation(with: otherUserEmail, otherUsersName: self.title ?? "User", firstMessage: messages) { [weak self] success in
+            DatabaseManager.shared.createNewConversation(with: otherUserEmail, otherUsersName: self.title ?? "User", firstMessage: message) { [weak self] success in
                 if success {
                     print("message sent")
                     self?.isNewConversation = false
                     inputBar.inputTextView.text = ""
+                    let newConversationId = "conversation_\(message.messageId)"
+                    self?.conversationId = newConversationId
+                    self?.listenFormessages(id: newConversationId, shouldScrollToBottom: true)
                 }
                 else {
                     print("failed to send message")
@@ -411,7 +414,7 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
                 return
             }
             //append conversation in existing conversation in DB
-            DatabaseManager.shared.sendMessage(to: conversationId, otherUserEmail: otherUserEmail, otherUsersName: name, newMessage: messages, completion: { success in
+            DatabaseManager.shared.sendMessage(to: conversationId, otherUserEmail: otherUserEmail, otherUsersName: name, newMessage: message, completion: { success in
                 if success {
                     print("message sent")
                     inputBar.inputTextView.text = ""
