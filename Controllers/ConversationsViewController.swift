@@ -60,7 +60,6 @@ class ConversationsViewController: UIViewController {
         view.addSubview(tableView)
         view.addSubview(noConversationsLabel)
         setUpTableView()
-        fetchConversations()
         startListeningForConversations()
         
     }
@@ -85,9 +84,13 @@ class ConversationsViewController: UIViewController {
                 print("reading data from DB closure converation models for table")
                 guard !conversations.isEmpty else {
                     print("conversations is empty")
+                    self?.tableView.isHidden = true
+                    self?.noConversationsLabel.isHidden = false
                     return
                 }
                 print("getting ready to update UI now.....")
+                self?.noConversationsLabel.isHidden = true
+                self?.tableView.isHidden = false
                 self?.conversations = conversations
                 
                 DispatchQueue.main.async {
@@ -97,6 +100,8 @@ class ConversationsViewController: UIViewController {
                 
             case .failure(let err):
                 print("FAILED TO GET CONVERSATIONS - ERROR: \(err)")
+                self?.tableView.isHidden = true
+                self?.noConversationsLabel.isHidden = false
             }
         })
     
@@ -105,6 +110,11 @@ class ConversationsViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         tableView.frame = view.bounds
+        
+        noConversationsLabel.frame = CGRect(x: 10,
+                                            y: (view.height - 100)/2,
+                                            width: view.width-20,
+                                            height: 100)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -139,9 +149,6 @@ class ConversationsViewController: UIViewController {
         tableView.dataSource = self
     }
     
-    private func fetchConversations(){
-        tableView.isHidden = false
-    }
     
     @objc private func didTapComposeButton(){
         let vc = NewConversationViewController()

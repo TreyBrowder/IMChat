@@ -155,7 +155,7 @@ class LoginViewController: UIViewController {
         passwordField.resignFirstResponder()
         
         guard let email = emailField.text, let password = passwordField.text,
-              !email.isEmpty, !password.isEmpty else {
+            !email.isEmpty, !password.isEmpty else {
             alertUserEmptyLoginErrorMsg()
             return
         }
@@ -164,7 +164,6 @@ class LoginViewController: UIViewController {
         
         //Add Firebase Log in functionality here
         FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password, completion: { [weak self] authResults, error in
-            
             guard let strongSelf = self else {
                 return
             }
@@ -176,6 +175,9 @@ class LoginViewController: UIViewController {
             
             guard let result = authResults, error == nil else {
                 print("Failed to log in user with email: \(email)")
+                if let error = error {
+                    print("Login error: \(error)")
+                }
                 return
             }
             
@@ -201,7 +203,8 @@ class LoginViewController: UIViewController {
             })
             
             //cache users log in email
-            UserDefaults.standard.set(email, forKey: "email")
+            //UserDefaults.standard.set(email, forKey: "email")
+            CacheManager.cacheObj.cacheUserEmail(with: email)
             
             print("logged in user: \(user)")
             strongSelf.navigationController?.dismiss(animated: true, completion: nil)

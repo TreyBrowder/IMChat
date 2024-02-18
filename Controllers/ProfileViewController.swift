@@ -49,6 +49,9 @@ class ProfileViewController: UIViewController {
                     return
                 }
                 
+                //clear Cache from previous user
+                CacheManager.cacheObj.removeAll()
+                
                 //Log out facebook
                 FBSDKLoginKit.LoginManager().logOut()
                 
@@ -94,7 +97,7 @@ class ProfileViewController: UIViewController {
         
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.width, height: 200))
         
-        headerView.backgroundColor = .link
+        headerView.backgroundColor = .systemBackground
         
         
         
@@ -105,7 +108,7 @@ class ProfileViewController: UIViewController {
         
         imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = .white
-        imageView.layer.borderColor = UIColor.white.cgColor
+        imageView.layer.borderColor = UIColor.gray.cgColor
         imageView.layer.borderWidth = 3
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = imageView.width/2
@@ -169,7 +172,7 @@ class ProfileTableViewCell: UITableViewCell {
         switch cellModel.cellModelType {
         case .info:
             //text is already aligned left so i dont really need this
-            self.textLabel?.textAlignment = .left
+            self.textLabel?.textAlignment = .center
             selectionStyle = .none
         case .logout:
             self.textLabel?.textColor = .red
