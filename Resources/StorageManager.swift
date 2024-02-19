@@ -8,12 +8,16 @@
 import Foundation
 import FirebaseStorage
 
+
+///Allows you to get fetch, and upload files to firebase storage
 final class StorageManager {
     
+    ///shared instance of the storage manager class
     static let sharedStorageObj = StorageManager()
     
     private let storage = Storage.storage().reference()
     
+    private init(){}
     
     /*
      formatt for the image path in the firebase storage
@@ -24,7 +28,7 @@ final class StorageManager {
     
     ///Upload picture to firebase sotrage and returns completion with URL string to download
     public func uploadProfilePic(with data: Data, fileName: String, completion: @escaping UploadPictureCompletion) {
-        storage.child("images/\(fileName)").putData(data, metadata: nil, completion: { metadata, error in
+        storage.child("images/\(fileName)").putData(data, metadata: nil, completion: { [weak self] metadata, error in
             guard error == nil else {
                 //failed
                 print("failed to upload data to firebase for picture")
@@ -32,7 +36,7 @@ final class StorageManager {
                 return
             }
             
-            self.storage.child("images/\(fileName)").downloadURL(completion: { url , error in
+            self?.storage.child("images/\(fileName)").downloadURL(completion: { url , error in
                 guard let url = url else {
                     print("Failed to get download URL")
                     completion(.failure(StorageErrors.failedToGetDownloadURL))
@@ -96,6 +100,10 @@ final class StorageManager {
         })
     }
     
+    ///Download image URL for a given path
+    /// Parameters
+    /// - `Path`:              Target path in firebase storage  to be downloaded
+    /// - `completion`:   Async closure to return with result
     public func downloadURL(for path: String, completion: @escaping (Result<URL, Error>) -> Void) {
         let reference = storage.child(path)
         reference.downloadURL(completion: { url, error in

@@ -12,63 +12,7 @@ import SDWebImage
 import AVFoundation
 import AVKit
 
-struct Message: MessageType {
-    
-    public var sender: MessageKit.SenderType
-    public var messageId: String
-    public var sentDate: Date
-    public var kind: MessageKit.MessageKind
-    
-}
-
-extension MessageKind {
-    var messageKindString: String {
-        switch self {
-            
-        case .text(_):
-            return "Text"
-        case .attributedText(_):
-            return "attribbuted_text"
-        case .photo(_):
-            return "photo"
-        case .video(_):
-            return "video"
-        case .location(_):
-            return "location"
-        case .emoji(_):
-            return "emoji"
-        case .audio(_):
-            return "audio"
-        case .contact(_):
-            return "contact"
-        case .linkPreview(_):
-            return "link"
-        case .custom(_):
-            return "custom"
-        }
-    }
-}
-
-struct Sender: SenderType {
-    
-   public var photoURL: String
-   public var senderId: String
-   public var displayName: String
-    
-}
-
-struct Media: MediaItem {
-    var url: URL?
-    
-    var image: UIImage?
-    
-    var placeholderImage: UIImage
-    
-    var size: CGSize
-    
-}
-
-class ChatViewController: MessagesViewController {
+final class ChatViewController: MessagesViewController {
     
     private var senderPhotoUrl: URL?
     private var otherUserPhotoUrl: URL?
@@ -230,7 +174,7 @@ class ChatViewController: MessagesViewController {
     }
     
     private func listenFormessages(id: String, shouldScrollToBottom: Bool) {
-        DatabaseManager.shared.getAllMessagesForConversations(with: id, completion: { [weak self] result in
+        DatabaseManager.databaseSharedObj.getAllMessagesForConversations(with: id, completion: { [weak self] result in
             switch result {
             case .success(let messages):
                 guard !messages.isEmpty else {
@@ -274,7 +218,7 @@ extension ChatViewController: UIImagePickerControllerDelegate, UINavigationContr
         guard let messageId = createMessageId(),
               let conversationId = conversationId,
               let selfSender = selfSender,
-              let name = self.title else {
+              let name = title else {
             return
         }
         
@@ -306,7 +250,7 @@ extension ChatViewController: UIImagePickerControllerDelegate, UINavigationContr
                                            sentDate: Date(),
                                            kind: .photo(media))
                     
-                    DatabaseManager.shared.sendMessage(to: conversationId, otherUserEmail: strongSelf.otherUserEmail, otherUsersName: name, newMessage: message, completion: { success in
+                    DatabaseManager.databaseSharedObj.sendMessage(to: conversationId, otherUserEmail: strongSelf.otherUserEmail, otherUsersName: name, newMessage: message, completion: { success in
                         
                         if success{
                             print("sent video message")
@@ -350,7 +294,7 @@ extension ChatViewController: UIImagePickerControllerDelegate, UINavigationContr
                                            sentDate: Date(),
                                            kind: .video(media))
                     
-                    DatabaseManager.shared.sendMessage(to: conversationId, otherUserEmail: strongSelf.otherUserEmail, otherUsersName: name, newMessage: message, completion: { success in
+                    DatabaseManager.databaseSharedObj.sendMessage(to: conversationId, otherUserEmail: strongSelf.otherUserEmail, otherUsersName: name, newMessage: message, completion: { success in
                         
                         if success{
                             print("sent photo message")
@@ -394,7 +338,7 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
         //send message integration
         if isNewConversation {
             //create convo in DB
-            DatabaseManager.shared.createNewConversation(with: otherUserEmail, otherUsersName: self.title ?? "User", firstMessage: message) { [weak self] success in
+            DatabaseManager.databaseSharedObj.createNewConversation(with: otherUserEmail, otherUsersName: title ?? "User", firstMessage: message) { [weak self] success in
                 if success {
                     print("message sent")
                     self?.isNewConversation = false
@@ -410,11 +354,11 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
         }
         else {
             guard let conversationId = conversationId,
-            let name = self.title else {
+            let name = title else {
                 return
             }
             //append conversation in existing conversation in DB
-            DatabaseManager.shared.sendMessage(to: conversationId, otherUserEmail: otherUserEmail, otherUsersName: name, newMessage: message, completion: { success in
+            DatabaseManager.databaseSharedObj.sendMessage(to: conversationId, otherUserEmail: otherUserEmail, otherUsersName: name, newMessage: message, completion: { success in
                 if success {
                     print("message sent")
                     inputBar.inputTextView.text = ""
@@ -496,7 +440,7 @@ extension ChatViewController: MessagesDataSource, MessagesLayoutDelegate, Messag
         if sender.senderId == selfSender?.senderId {
             //show your image
             //if i already have the URL for avatar image
-            if let currentUserImageURL = self.senderPhotoUrl {
+            if let currentUserImageURL = senderPhotoUrl {
                 avatarView.sd_setImage(with: currentUserImageURL)
             }
             else {
@@ -577,7 +521,7 @@ extension ChatViewController: MessageCellDelegate {
             }
             
             let vc = PhotoViewerViewController(with: imageUrl)
-            self.navigationController?.pushViewController(vc, animated: true)
+            navigationController?.pushViewController(vc, animated: true)
         case .video(let media):
             guard let videoUrl = media.url else {
                 print("failed to play video")

@@ -9,7 +9,7 @@ import UIKit
 import FirebaseAuth
 import JGProgressHUD
 
-class RegisterViewController: UIViewController {
+final class RegisterViewController: UIViewController {
     
     private let spinner = JGProgressHUD(style: .dark)
     
@@ -182,7 +182,7 @@ class RegisterViewController: UIViewController {
         spinner.show(in: view)
         
         //Add Firebase Log in functionality below
-        DatabaseManager.shared.userExist(with: email, completion: { [weak self] exists in
+        DatabaseManager.databaseSharedObj.userExist(with: email, completion: { [weak self] exists in
             guard let strongSelf = self else {
                 return
             }
@@ -210,7 +210,7 @@ class RegisterViewController: UIViewController {
                 //instert to the Database
                 let iMChatUser = IMChatUser(firstLastName: name,
                                             emailAddress: email)
-                DatabaseManager.shared.insertUser(with: iMChatUser, completion: { success in
+                DatabaseManager.databaseSharedObj.insertUser(with: iMChatUser, completion: { success in
                     if success {
                         //upload imagae
                         guard let image = strongSelf.imageView.image, let data = image.pngData() else {
@@ -316,7 +316,7 @@ extension RegisterViewController: UIImagePickerControllerDelegate, UINavigationC
         guard let selectedImg = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else {
             return
         }
-        self.imageView.image = selectedImg
+        imageView.image = selectedImg
     }
     
     //gets called when a user cancels the photo selection or when user cancels taking a photo

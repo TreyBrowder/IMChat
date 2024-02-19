@@ -9,7 +9,7 @@ import Foundation
 import SDWebImage
 
 
-class NewConversationCell: UITableViewCell {
+class NewConversationCellView: UITableViewCell {
     
     static let identifier = "NewConversationCell"
     
@@ -56,7 +56,7 @@ class NewConversationCell: UITableViewCell {
     }
     
     public func config(with model: SearchResult) {
-        self.userNameLabel.text = model.name
+        userNameLabel.text = model.name
         
         let path = "images/\(model.email)_profile_picture.png"
         StorageManager.sharedStorageObj.downloadURL(for: path, completion: { [ weak self ] result in

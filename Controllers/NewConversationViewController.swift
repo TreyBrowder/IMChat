@@ -8,7 +8,7 @@
 import UIKit
 import JGProgressHUD
 
-class NewConversationViewController: UIViewController {
+final class NewConversationViewController: UIViewController {
     
     private var usersArr = [[String: String]]()
     private var hasFetched = false
@@ -28,8 +28,8 @@ class NewConversationViewController: UIViewController {
     private let tableView: UITableView = {
         let table = UITableView()
         table.isHidden = true
-        table.register(NewConversationCell.self,
-                       forCellReuseIdentifier: NewConversationCell.identifier)
+        table.register(NewConversationCellView.self,
+                       forCellReuseIdentifier: NewConversationCellView.identifier)
         return table
     }()
     
@@ -85,8 +85,8 @@ extension NewConversationViewController: UITableViewDelegate, UITableViewDataSou
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let model = results[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: NewConversationCell.identifier,
-                                                     for: indexPath) as! NewConversationCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: NewConversationCellView.identifier,
+                                                     for: indexPath) as! NewConversationCellView
         cell.config(with: model)
         return cell
     }
@@ -119,7 +119,7 @@ extension NewConversationViewController: UISearchBarDelegate {
         results.removeAll()
         spinner.show(in: view)
         
-        self.searchUsers(query: text)
+        searchUsers(query: text)
     }
     
     ///get the results from search
@@ -131,7 +131,7 @@ extension NewConversationViewController: UISearchBarDelegate {
         }
         else {
             //if not - fetch then filt
-            DatabaseManager.shared.getAllUsers(completion: { [weak self] result in
+            DatabaseManager.databaseSharedObj.getAllUsers(completion: { [weak self] result in
                 switch result {
                 case .success(let usersCollection):
                     self?.hasFetched = true
@@ -154,10 +154,10 @@ extension NewConversationViewController: UISearchBarDelegate {
         let safeEmail = DatabaseManager.safeEmail(emailAddress: currentUserEmail)
         
         //dismiss search spinner
-        self.spinner.dismiss()
+        spinner.dismiss()
         
         //dont want to allow user to start conversation with themselves
-        let resultsArr: [SearchResult] = self.usersArr.filter({
+        let resultsArr: [SearchResult] = usersArr.filter({
             guard let email = $0["email"], email != safeEmail else {
                 return false
             }
@@ -179,25 +179,20 @@ extension NewConversationViewController: UISearchBarDelegate {
             return SearchResult(name: name, email: email)
         })
         
-        self.results = resultsArr
+        results = resultsArr
         updateUI()
     }
         
     ///upodate UI based on results
     func updateUI() {
         if results.isEmpty {
-            self.noResultsLabel.isHidden = false
-            self.tableView.isHidden = true
+            noResultsLabel.isHidden = false
+            tableView.isHidden = true
         }
         else {
-            self.noResultsLabel.isHidden = true
-            self.tableView.isHidden = false
-            self.tableView.reloadData()
+            noResultsLabel.isHidden = true
+            tableView.isHidden = false
+            tableView.reloadData()
         }
     }
-}
-
-struct SearchResult {
-    let name: String
-    let email: String
 }

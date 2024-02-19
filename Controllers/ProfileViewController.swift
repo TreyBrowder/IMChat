@@ -9,33 +9,23 @@ import UIKit
 import FirebaseAuth
 import FBSDKLoginKit
 
-enum ProfileCellModelType {
-    case info, logout
-}
-
-struct ProfileCellModel {
-    let cellModelType: ProfileCellModelType
-    let title: String
-    let handler: (()-> Void)?
-}
-
-class ProfileViewController: UIViewController {
+final class ProfileViewController: UIViewController {
 
     @IBOutlet var tableView: UITableView!
     
     //need multiple cells
-    var data = [ProfileCellModel]()
+    var data = [ProfileCell]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(ProfileTableViewCell.self, forCellReuseIdentifier: ProfileTableViewCell.identifier)
-        data.append(ProfileCellModel(cellModelType: .info,
+        data.append(ProfileCell(cellModelType: .info,
                                      title: "Name: \(UserDefaults.standard.value(forKey: "name") as? String ?? "No Name")",
                                      handler: nil))
-        data.append(ProfileCellModel(cellModelType: .info,
+        data.append(ProfileCell(cellModelType: .info,
                                      title: "Email: \(UserDefaults.standard.value(forKey: "email") as? String ?? "No Email")",
                                      handler: nil))
-        data.append(ProfileCellModel(cellModelType: .logout, title: "Log Out", handler: {[ weak self] in
+        data.append(ProfileCell(cellModelType: .logout, title: "Log Out", handler: {[ weak self] in
             
             guard let strongSelf = self else {
                 return
@@ -165,18 +155,18 @@ class ProfileTableViewCell: UITableViewCell {
     
     static let identifier = "ProfileTableViewCell"
     
-    public func setUp(with cellModel: ProfileCellModel) {
+    public func setUp(with cellModel: ProfileCell) {
         
-        self.textLabel?.text = cellModel.title
+        textLabel?.text = cellModel.title
         
         switch cellModel.cellModelType {
         case .info:
             //text is already aligned left so i dont really need this
-            self.textLabel?.textAlignment = .center
+            textLabel?.textAlignment = .center
             selectionStyle = .none
         case .logout:
-            self.textLabel?.textColor = .red
-            self.textLabel?.textAlignment = .center
+            textLabel?.textColor = .red
+            textLabel?.textAlignment = .center
         }
         
     }
