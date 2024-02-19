@@ -10,7 +10,7 @@ import FirebaseAuth
 import FBSDKLoginKit
 import JGProgressHUD
 
-class LoginViewController: UIViewController {
+final class LoginViewController: UIViewController {
     
     private let spinner = JGProgressHUD(style: .dark)
     
@@ -187,7 +187,7 @@ class LoginViewController: UIViewController {
             
             //cache users name
             let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
-            DatabaseManager.shared.getDataFor(path: safeEmail, completion: { result in
+            DatabaseManager.databaseSharedObj.getDataFor(path: safeEmail, completion: { result in
                 switch result {
                 case .success(let data):
                     guard let userData = data as? [String: Any],
@@ -290,16 +290,16 @@ extension LoginViewController: LoginButtonDelegate {
             //cache users email - since email doesnt work:
             //generate random number 1-50 to attach to test email string
             //then also need to cache user name
-            var email = "test\(Int.random(in: 1..<50))@test.com"
+            let email = "test\(Int.random(in: 1..<50))@test.com"
             UserDefaults.standard.set(email, forKey: "email")
             UserDefaults.standard.set("\(userName)", forKey: "name")
             
             //adduser
-            DatabaseManager.shared.userExist(with: userName) { exists in
+            DatabaseManager.databaseSharedObj.userExist(with: userName) { exists in
                 if !exists {
                     //email permission dont work without verfied business
                     let newIMChatUser: IMChatUser = IMChatUser(firstLastName: userName, emailAddress: email)
-                    DatabaseManager.shared.insertUser(with: newIMChatUser, completion: { success in
+                    DatabaseManager.databaseSharedObj.insertUser(with: newIMChatUser, completion: { success in
                         if success {
                             guard let url = URL(string: picURL) else {
                                 print("failed to set facebook pic url as url string")

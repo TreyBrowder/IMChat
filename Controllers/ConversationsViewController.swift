@@ -9,20 +9,8 @@ import UIKit
 import FirebaseAuth
 import JGProgressHUD
 
-struct Conversation {
-    let id: String
-    let name: String
-    let otherUserEmail: String
-    let latestMessage: LatestMessage
-}
-
-struct LatestMessage {
-    let date: String
-    let text: String
-    let isRead: Bool
-}
-
-class ConversationsViewController: UIViewController {
+///Controller to show a list of conversations
+final class ConversationsViewController: UIViewController {
     
     
     private let spinner = JGProgressHUD(style: .dark)
@@ -32,8 +20,8 @@ class ConversationsViewController: UIViewController {
     private var tableView: UITableView = {
         let table = UITableView()
         table.isHidden = true
-        table.register(ConversationTableViewCell.self,
-                       forCellReuseIdentifier: ConversationTableViewCell.identifier)
+        table.register(ConversationTableViewCellView.self,
+                       forCellReuseIdentifier: ConversationTableViewCellView.identifier)
         
         return table
     }()
@@ -77,7 +65,7 @@ class ConversationsViewController: UIViewController {
         print("Conversations loading.....")
         let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
         
-        DatabaseManager.shared.getAllConversations(for: safeEmail, completion: {[weak self] result in
+        DatabaseManager.databaseSharedObj.getAllConversations(for: safeEmail, completion: {[weak self] result in
             
             switch result {
             case .success(let conversations):
@@ -190,7 +178,7 @@ class ConversationsViewController: UIViewController {
         //check in database if conversation with these 2 users exists -
         //if it does use that conversation ID if not - new conversation
         
-        DatabaseManager.shared.conversationExists(with: email) { [weak self] result in
+        DatabaseManager.databaseSharedObj.conversationExists(with: email) { [weak self] result in
             guard let strongSelf = self else {
                 return
             }
@@ -229,8 +217,8 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let model = conversations[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: ConversationTableViewCell.identifier,
-                                                 for: indexPath) as! ConversationTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: ConversationTableViewCellView.identifier,
+                                                 for: indexPath) as! ConversationTableViewCellView
         cell.config(with: model)
         return cell
     }
@@ -271,11 +259,13 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
             
             let converionId = conversations[indexPath.row].id
             tableView.beginUpdates()
+            conversations.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .left)
             
-            DatabaseManager.shared.deleteConversation(conversationId: converionId) { [weak self] success in
-                if success {
-                    self?.conversations.remove(at: indexPath.row)
-                    tableView.deleteRows(at: [indexPath], with: .left)
+            DatabaseManager.databaseSharedObj.deleteConversation(conversationId: converionId) { success in
+                if !success {
+                    print("failed to delete")
+                    //error handling - add model and row back and show the error
                 }
             }
             
