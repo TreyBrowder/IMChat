@@ -182,7 +182,7 @@ final class LoginViewController: UIViewController {
             }
             
             let user = result.user
-            print("logged in user: \(user)")
+            print("logged in user: \(email)")
             
             
             //cache users name
